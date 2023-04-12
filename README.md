@@ -8,9 +8,10 @@ Nous chargeons un fichier.csv qui contient des utilisateurs et leurs information
 
 ## Prérequis
 
-- Python 3.7
+- [Python 3.7](https://www.python.org/downloads/release/python-3715/)
 - Docker
 - Docker-compose
+- Git
 
 ## Installation
 
