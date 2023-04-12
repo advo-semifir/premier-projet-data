@@ -41,5 +41,5 @@ Nous chargeons un fichier.csv qui contient des utilisateurs et leurs information
 - Installer les dépendances
 
 ```bash
-pip install -r requireme
+pip install -r requirements.txt
 ```
