@@ -41,6 +41,11 @@ db_user = "root"
 db_password = "example"
 db_database = "exercice"
 
-conn = se_connecter_db(db_host, db_user, db_password, db_database)
+# on se connecte à la base de données
+cnx = se_connecter_db(db_host, db_user, db_password, db_database)
 
+# on crée un curseur. Un curseur permet de parcourir les enregistrements d'un résultat
+curseur = cnx.cursor()
 
+# on crée une requête sql pour ajouter les clients
+sql = "INSERT INTO clients (id, nom, prenom, email, profession, pays, ville) VALUES (%s, %s, %s, %s, %s, %s)"
