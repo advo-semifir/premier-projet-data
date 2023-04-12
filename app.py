@@ -13,7 +13,6 @@ def lire_csv(nom_fichier: str) -> p.DataFrame:
         p.DataFrame: DataFrame contenant les données du fichier csv
     """
     table = p.read_csv(nom_fichier)
-    print(table)
     return table
 
 
@@ -38,7 +37,7 @@ def se_connecter_db(host: str, user: str, password: str, database: str) -> maria
     return connexion
 
 
-def ajouter_client(cnx: Connection , data):
+def ajouter_client(cnx: Connection , data: p.DataFrame):
     """_summary_ : permet d'ajouter un client dans la base de données
 
     Args:
@@ -50,11 +49,15 @@ def ajouter_client(cnx: Connection , data):
     # on crée une requête sql pour ajouter les clients
     sql = "INSERT INTO clients (id, nom, prenom, email, profession, pays, ville) \
         VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    # on exécute la requête sql
-    curseur.execute(sql, data)
-    # on commit les changements
+    
+    for index, row in data.iterrows():
+        # on exécute la requête sql
+        curseur.execute(sql, \
+            (row["id"], row["firstname"], row["lastname"], row["email"], row["profession"], row["country"], row["city"]))
+        
+    # on commit les changements. Commiter permet de valider les changements
     cnx.commit()
-    # on ferme la connexion
+    # on ferme la connexion (c'est raccrocher le téléphone)
     cnx.close()
 
 # vérification que le fichier est bien exécuté en tant que premier fichier
@@ -65,7 +68,13 @@ if __name__ == "__main__":
     db_user = "root"
     db_password = "example"
     db_database = "exercice"
-
-    # on se connecte à la base de données
+    
+    # on lit le fichier csv
+    table_clients = lire_csv("clients.csv")
+    
+    # on se connecte à la base de données. C'est comme lancer un appel téléphonique
     cnx = se_connecter_db(db_host, db_user, db_password, db_database)
+    
+    # on ajoute un client
+    ajouter_client(cnx, table_clients)
 
