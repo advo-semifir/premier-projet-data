@@ -1,5 +1,7 @@
 import pandas as p
 import pymysql as maria
+from pymysql.connections import Connection
+
 
 def lire_csv(nom_fichier: str) -> p.DataFrame:
     """_summary_ : permet de lire un fichier csv et de le convertir en DataFrame
@@ -36,16 +38,34 @@ def se_connecter_db(host: str, user: str, password: str, database: str) -> maria
     return connexion
 
 
-db_host = "localhost"
-db_user = "root"
-db_password = "example"
-db_database = "exercice"
+def ajouter_client(cnx: Connection , data):
+    """_summary_ : permet d'ajouter un client dans la base de données
 
-# on se connecte à la base de données
-cnx = se_connecter_db(db_host, db_user, db_password, db_database)
+    Args:
+        cnx (maria.connections.Connection): appel vers la base de données
+        data (p.DataFrame): DataFrame contenant les données du client à ajouter
+    """
+    # on crée un curseur. Un curseur permet de parcourir les enregistrements d'un résultat
+    curseur = cnx.cursor()
+    # on crée une requête sql pour ajouter les clients
+    sql = "INSERT INTO clients (id, nom, prenom, email, profession, pays, ville) \
+        VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    # on exécute la requête sql
+    curseur.execute(sql, data)
+    # on commit les changements
+    cnx.commit()
+    # on ferme la connexion
+    cnx.close()
 
-# on crée un curseur. Un curseur permet de parcourir les enregistrements d'un résultat
-curseur = cnx.cursor()
+# vérification que le fichier est bien exécuté en tant que premier fichier
+# si c'est le cas, on exécute le code ci-dessous
+# exemple: py app.py
+if __name__ == "__main__":
+    db_host = "localhost"
+    db_user = "root"
+    db_password = "example"
+    db_database = "exercice"
 
-# on crée une requête sql pour ajouter les clients
-sql = "INSERT INTO clients (id, nom, prenom, email, profession, pays, ville) VALUES (%s, %s, %s, %s, %s, %s)"
+    # on se connecte à la base de données
+    cnx = se_connecter_db(db_host, db_user, db_password, db_database)
+
