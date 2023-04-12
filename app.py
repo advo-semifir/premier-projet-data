@@ -25,7 +25,7 @@ def se_connecter_db(host: str, user: str, password: str, database: str) -> maria
     Args:
         host (str): machine sur laquelle se trouve la base de données
             - localhost : si c'est sur la même machine
-            - ip : si c'est sur une autre machine exemple: 10.125.22.53
+            - ip : si c'est sur une autre machine exemple: l'ip d'un eleve "lambda"
         user (str): login de la base de données
         password (str): password de la base de données
         database (str): nom de la base de données
