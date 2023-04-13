@@ -1,7 +1,7 @@
 import pandas as p
-import pymysql as maria
+# connecteur/driver (traducteur)
+import pymysql
 from pymysql.connections import Connection
-
 
 def lire_csv(nom_fichier: str) -> p.DataFrame:
     """_summary_ : permet de lire un fichier csv et de le convertir en DataFrame
@@ -33,11 +33,12 @@ def se_connecter_db(host: str, user: str, password: str, database: str) -> maria
     Returns:
         maria.connections.Connection: appel vers la base de données
     """
-    connexion = maria.connect(host=host, user=user, password=password, database=database)
+    connexion = pymysql.connect(host=host, user=user,
+                              password=password, database=database)
     return connexion
 
 
-def ajouter_client(cnx: Connection , data: p.DataFrame):
+def ajouter_client(cnx: Connection, data: p.DataFrame):
     """_summary_ : permet d'ajouter un client dans la base de données
 
     Args:
@@ -49,16 +50,17 @@ def ajouter_client(cnx: Connection , data: p.DataFrame):
     # on crée une requête sql pour ajouter les clients
     sql = "INSERT INTO clients (id, nom, prenom, email, profession, pays, ville) \
         VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    
+
     for index, row in data.iterrows():
         # on exécute la requête sql
-        curseur.execute(sql, \
-            (row["id"], row["firstname"], row["lastname"], row["email"], row["profession"], row["country"], row["city"]))
-        
+        curseur.execute(sql,
+                        (row["id"], row["firstname"], row["lastname"], row["email"], row["profession"], row["country"], row["city"]))
+
     # on commit les changements. Commiter permet de valider les changements
     cnx.commit()
     # on ferme la connexion (c'est raccrocher le téléphone)
     cnx.close()
+
 
 # vérification que le fichier est bien exécuté en tant que premier fichier
 # si c'est le cas, on exécute le code ci-dessous
@@ -68,13 +70,12 @@ if __name__ == "__main__":
     db_user = "root"
     db_password = "example"
     db_database = "exercice"
-    
+
     # on lit le fichier csv
     table_clients = lire_csv("clients.csv")
-    
-    # on se connecte à la base de données. C'est comme lancer un appel téléphonique
-    cnx = se_connecter_db(db_host, db_user, db_password, db_database)
-    
-    # on ajoute un client
-    ajouter_client(cnx, table_clients)
 
+    # on se connecte à la base de données. C'est comme lancer un appel téléphonique
+    connexion = se_connecter_db(db_host, db_user, db_password, db_database)
+
+    # on ajoute un client
+    ajouter_client(connexion, table_clients)

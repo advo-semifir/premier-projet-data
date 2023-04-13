@@ -41,6 +41,18 @@ Nous chargeons un fichier.csv qui contient des utilisateurs et leurs information
 
 - Installer les dépendances
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+- Démarrer la base de données avec docker-compose
+
+    ```bash
+    docker-compose up -d
+    ```
+
+- Lancez le script d'import des données
+
+    ```bash
+    python app.py
+    ```
