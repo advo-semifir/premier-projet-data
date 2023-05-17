@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "exo-panda"
+version = "0.1.0"
+description = ""
+authors = ["Adrien Vossough <adrien.vossough@semifir.com>"]
+readme = "README.md"
+packages = [{include = "exo_panda"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.0.1"
+pymysql = "^1.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

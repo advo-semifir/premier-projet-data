@@ -2,6 +2,7 @@ import pandas as p
 # connecteur/driver (traducteur)
 import pymysql
 from pymysql.connections import Connection
+import datetime
 
 def lire_csv(nom_fichier: str) -> p.DataFrame:
     """_summary_ : permet de lire un fichier csv et de le convertir en DataFrame
@@ -19,7 +20,7 @@ def lire_csv(nom_fichier: str) -> p.DataFrame:
 # table = lire_csv("clients.csv")
 
 
-def se_connecter_db(host: str, user: str, password: str, database: str) -> maria.connections.Connection:
+def se_connecter_db(host: str, user: str, password: str, database: str) -> Connection:
     """_summary_ : permet de se connecter à une base de données
 
     Args:
@@ -72,10 +73,10 @@ if __name__ == "__main__":
     db_database = "exercice"
 
     # on lit le fichier csv
-    table_clients = lire_csv("clients.csv")
+    data = lire_csv("clients.csv")
 
-    # on se connecte à la base de données. C'est comme lancer un appel téléphonique
-    connexion = se_connecter_db(db_host, db_user, db_password, db_database)
+    # # on se connecte à la base de données. C'est comme lancer un appel téléphonique
+    # connexion = se_connecter_db(db_host, db_user, db_password, db_database)
 
-    # on ajoute un client
-    ajouter_client(connexion, table_clients)
+    # # on ajoute un client
+    # ajouter_client(connexion, data)
