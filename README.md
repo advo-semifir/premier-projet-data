@@ -16,6 +16,9 @@ Nous chargeons un fichier.csv qui contient des utilisateurs et leurs information
 ## Installation
 
 - Cloner le projet
+
+### Si vous utilisez un environnement virtuel "venv"
+
 - Créer un environnement virtuel
 
     ```bash
@@ -45,11 +48,23 @@ Nous chargeons un fichier.csv qui contient des utilisateurs et leurs information
     pip install -r requirements.txt
     ```
 
+### Si vous utilisez [poetry](https://python-poetry.org/)
+
+- Installer les dépendances
+
+    ```bash
+    poetry install
+    ```
+
+### Installer la base de données
+
 - Démarrer la base de données avec docker-compose
 
     ```bash
     docker-compose up -d
     ```
+
+## Utilisation
 
 - Lancez le script d'import des données
 
